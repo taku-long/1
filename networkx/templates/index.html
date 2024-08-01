@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Visualization</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</head>
+<body>
+    <h1>Network Visualization</h1>
+    <div id="controls">
+        <button id="select-points">地点選択</button>
+        <label for="analysis_type">分析手法:</label>
+        <select id="analysis_type" onchange="updateUI()">
+            <option value="isochrone">到達圏分析</option>
+            <option value="shortest_path">最短経路探索</option>
+        </select>
+        <label for="mode">移動手段:</label>
+        <select id="mode">
+            <option value="walk">徒歩 (4km/h)</option>
+            <option value="bike">自転車 (15km/h)</option>
+            <option value="car">自動車 (30km/h)</option>
+        </select>
+        <div id="facility-container">
+            <label for="facility_type">施設取得:</label>
+            <select id="facility_type">
+                <option value="school">学校</option>
+                <option value="station">駅</option>
+                <option value="bus_stop">バス停</option>
+                <option value="building">高さ15m以上の建物</option>
+            </select>
+            <button id="extract-facilities">施設抽出</button>
+        </div>
+        <div id="time-container">
+            <label for="time">移動時間:</label>
+            <select id="time">
+                <option value="5">5分</option>
+                <option value="10">10分</option>
+                <option value="20">20分</option>
+            </select>
+        </div>
+        <button id="extract-network">ネットワーク抽出</button>
+        <button id="start">スタート</button>
+        <button id="polygonize">ポリゴン化</button>
+    </div>
+    <div id="map"></div>
+    <div id="selected-points">
+        <h3>選択した地点</h3>
+        <ul id="points-list"></ul>
+    </div>
+    <div id="loading">データ取得中です...</div>
+    <div id="bottom-controls">
+        <a>左下から右上にドラッグ：範囲選択　/　</a>
+        <a>shift+ドラッグ：表示移動　/　</a>
+        <a>ctrl+クリック：地点追加　/　</a>
+        <button id="export-shp">SHP出力</button>
+        <button id="clear">クリア</button>
+    </div>
+</body>
+</html>
